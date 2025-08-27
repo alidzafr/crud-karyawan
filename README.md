@@ -1,3 +1,3 @@
-1. Composer install
+1. Jalankan perintah : Composer install
 
-2. configure .env database
+2. Buka .env lalu Ubah lokasi : database.default.database
