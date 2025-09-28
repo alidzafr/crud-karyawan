@@ -26,11 +26,12 @@ class Karyawan extends BaseController
         return view('karyawan/index', $data);
     }
 
-    public function create() {
+    public function create()
+    {
         return view('karyawan/create');
     }
 
-    public function store() 
+    public function store()
     {
         $tempstatus = false;
         if ($this->request->getVar('status') == '1') {
@@ -38,70 +39,62 @@ class Karyawan extends BaseController
         } else {
             $tempStatus = false;
         };
-        
+
         $this->KaryawanModel->save([
             'nama' => $this->request->getVar('nama'),
             'jabatan' => $this->request->getVar('jabatan'),
             'tanggal_masuk' => $this->request->getVar('tanggal_masuk'),
             'status' => $tempstatus,
         ]);
-        
+
         // $tempArr = [
-            // $nama = $this->request->getVar('nama'),
-            // $jabatan = $this->request->getVar('jabatan'),
-            // $tanggal_masuk = $this->request->getVar('tanggal_masuk'),
-            // $status = $tempstatus
-            // ];
-            
-            // dd($tempArr);
-            
-            return redirect()->to('/');
-        }
-        
-        public function detail($id)
-        {
-            $data = ['karyawan' => $this->KaryawanModel->getKaryawan($id)];
-            
-            if (empty($data['karyawan'])) {
-                throw new \CodeIgniter\Exceptions\PageNotFoundException('Judul karyawan ' . $id . ' tidak ditemukan');
-            }
-            
-            return view('karyawan/detail', $data);
-        }
-        
-        public function delete($id)
-        {
-            $this->KaryawanModel->delete($id);
-            
-            return redirect()->to('/');
-        }
-        
-        public function edit($id)
-        {
-            $data = ['karyawan' => $this->KaryawanModel->getKaryawan($id)];
-            
-            return view('karyawan/edit', $data);
-        }
-        
-        public function update($id)
-        {
-            $tempstatus = false;
-            if ($this->request->getVar('status') == '1') {
-                $tempStatus = true;
-            } else {
-                $tempStatus = false;
-            };
-            
-            $this->KaryawanModel->save([
-                'nama' => $this->request->getVar('nama'),
-                'jabatan' => $this->request->getVar('jabatan'),
-                'tanggal_masuk' => $this->request->getVar('tanggal_masuk'),
-                'status' => $tempstatus,
-            ]);
-            
-            return redirect()->to('karyawan/' . $this->request->getVar('id'));
-        }
-        
-        
+        // $nama = $this->request->getVar('nama'),
+        // $jabatan = $this->request->getVar('jabatan'),
+        // $tanggal_masuk = $this->request->getVar('tanggal_masuk'),
+        // $status = $tempstatus
+        // ];
+
+        // dd($tempArr);
+
+        return redirect()->to('/');
     }
-    
+
+    public function detail($id)
+    {
+        $data = ['karyawan' => $this->KaryawanModel->getKaryawan($id)];
+
+        if (empty($data['karyawan'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Judul karyawan ' . $id . ' tidak ditemukan');
+        }
+
+        return view('karyawan/detail', $data);
+    }
+
+    public function delete($id)
+    {
+        $this->KaryawanModel->delete($id);
+
+        return redirect()->to('/');
+    }
+
+    public function edit($id)
+    {
+        $data = ['karyawan' => $this->KaryawanModel->getKaryawan($id)];
+
+        return view('karyawan/edit', $data);
+    }
+
+    public function update($id)
+    {
+
+        $this->KaryawanModel->save([
+            'id' => $id,
+            'nama' => $this->request->getVar('nama'),
+            'jabatan' => $this->request->getVar('jabatan'),
+            'tanggal_masuk' => $this->request->getVar('tanggal_masuk'),
+            'status' => $this->request->getVar('status')
+        ]);
+
+        return redirect()->to('/');
+    }
+}

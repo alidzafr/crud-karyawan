@@ -25,7 +25,7 @@
                             <td> <?= $k['nama']; ?></td>
                             <td> <?= $k['jabatan']; ?></td>
                             <td> <?= $k['tanggal_masuk']; ?></td>
-                            <td><?= $k['status']; ?></td>
+                            <td><?= $k['status'] ? 'Aktif' : 'Tidak Aktif'; ?></td>
                             <td><a href="/karyawan/<?= $k['id']; ?>" class="btn btn-success">Detail</a></td>
                         </tr>
                     <?php endforeach; ?>
