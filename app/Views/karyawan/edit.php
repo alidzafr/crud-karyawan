@@ -9,16 +9,18 @@
 
                 <input type="hidden" name="_method" value="PUT">
                 <?= csrf_field(); ?>
-
                 <div class="mb-3">
                     <label for="nama" class="form-label">nama</label>
-                    <input name="nama" type="text" class="form-control" value="<?= $karyawan['nama']; ?>" autofocus>
+                    <input name="nama" type="text" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : '' ?>" value="<?= $karyawan['nama']; ?>" autofocus>
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('nama') ?>
+                    </div>
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="jabatan" class="form-label">jabatan</label>
                     <select name="jabatan" class="form-select" aria-label="Default select example">
-                        <option selected>Pilih Jabatan</option>
+                        <option selected><?= (old('jabatan')) ? old('jabatan') : $karyawan['jabatan']; ?></option>
                         <option value="Admin">Admin</option>
                         <option value="Staff">Staff</option>
                         <option value="Manager">Manager</option>
@@ -27,7 +29,10 @@
 
                 <div class="mb-3">
                     <label for="tanggal_masuk" class="form-label">tanggal masuk</label>
-                    <input name="tanggal_masuk" type="date" class="form-control">
+                    <input name="tanggal_masuk" type="date" max="<?= date('Y-m-d') ?>" class="form-control <?= ($validation->hasError('tanggal_masuk')) ? 'is-invalid' : '' ?>" value="<?= $karyawan['tanggal_masuk']; ?>" value="<?= (old('tanggal_masuk')) ? old('tanggal_masuk') : $karyawan['tanggal_masuk']; ?>">
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('tanggal_masuk') ?>
+                    </div>
                 </div>
 
                 <div class="mb-3">
