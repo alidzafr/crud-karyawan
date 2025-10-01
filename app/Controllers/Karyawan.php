@@ -28,23 +28,29 @@ class Karyawan extends BaseController
 
     public function create()
     {
-        return view('karyawan/create');
+        session();
+        $data = ['validation' => \Config\Services::validation()];
+        return view('karyawan/create', $data);
     }
 
     public function store()
     {
-        $tempstatus = false;
-        if ($this->request->getVar('status') == '1') {
-            $tempStatus = true;
-        } else {
-            $tempStatus = false;
-        };
+        $rules = [
+            'nama'   => 'required|min_length[3]',
+            'jabatan' => 'required',
+            'status' => 'required',
+            'tanggal_masuk' => 'required|valid_date[Y-m-d]'
+        ];
+
+        if (! $this->validate($rules)) {
+            return view('karyawan/create', ['validation' => $this->validator]);
+        }
 
         $this->KaryawanModel->save([
             'nama' => $this->request->getVar('nama'),
             'jabatan' => $this->request->getVar('jabatan'),
             'tanggal_masuk' => $this->request->getVar('tanggal_masuk'),
-            'status' => $tempstatus,
+            'status' => $this->request->getVar('status')
         ]);
 
         // $tempArr = [
